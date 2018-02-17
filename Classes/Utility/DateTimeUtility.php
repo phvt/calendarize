@@ -65,6 +65,8 @@ class DateTimeUtility
      */
     public static function convertWeekYear2DayMonthYear($week, $year, $startDay = 1): \DateTime
     {
+        $week = \str_pad((string) $week, 2, '0', STR_PAD_LEFT);
+
         return self::normalizeDateTimeSingle(\strtotime($year . '-W' . $week . '-' . $startDay));
     }
 
@@ -116,7 +118,7 @@ class DateTimeUtility
         if (!MathUtility::canBeInterpretedAsInteger($day)) {
             $day = $date->format('d');
         }
-        $date->setDate($year, $month, $day);
+        $date->setDate((int) $year, (int) $month, (int) $day);
         $date->setTime(0, 0, 0);
         if ($date->format('m') > $month) {
             $date->modify('last day of last month');
